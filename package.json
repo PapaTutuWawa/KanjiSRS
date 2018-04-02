@@ -1,5 +1,5 @@
 {
-    "name": "Kanji SRS",
+    "name": "kanji-srs",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -8,7 +8,6 @@
         "material-ui": "next",
         "react": "latest",
         "react-dom": "latest",
-        "react-router": "^4.2.0",
         "react-router-dom": "^4.2.2",
         "react-scripts-ts": "latest"
     },
