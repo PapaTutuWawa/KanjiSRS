@@ -5,7 +5,7 @@ import Textfield from "material-ui/TextField";
 //@ts-ignore
 import { toKana } from "wanakana";
 
-import { QuestionType } from "../models/review";
+import { QuestionType } from "../models/Review";
 
 interface IKanjiInputProps {
     validate: (input: string) => void;

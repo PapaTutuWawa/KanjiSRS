@@ -5,10 +5,10 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import CssBaseline from "material-ui/CssBaseline";
 
-import Topbar from "./components/topbar";
-import Review from "./pages/review";
-import Dashboard from "./pages/dashboard";
-import PostReview from "./pages/postReview";
+import Topbar from "./components/TopBar";
+import Review from "./pages/Review";
+import Dashboard from "./pages/Dashboard";
+import PostReview from "./pages/PostReview";
 import BottomBar from "./components/BottomBar";
 
 ReactDOM.render(

@@ -7,12 +7,12 @@ import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
 
-import KanjiInput from "./kanjiInput";
+import KanjiInput from "./KanjiInput";
 
 import { IKanji,
          QuestionType,
          generateQuestionQueue,
-         shuffleQuestionQueue } from "../models/reviewQueue";
+         shuffleQuestionQueue } from "../models/ReviewQueue";
 
 interface IKanjiViewState {
     kanjiIndex: number;

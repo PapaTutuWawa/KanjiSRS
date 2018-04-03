@@ -3,7 +3,7 @@ import * as React from "react";
 import Grid from "material-ui/Grid";
 import { WithStyles, withStyles } from "material-ui/styles";
 
-import { KanjiView } from "../components/kanjiView";
+import { KanjiView } from "../components/KanjiView";
 
 const decorate = withStyles(({ palette, spacing }) => ({
     review: {

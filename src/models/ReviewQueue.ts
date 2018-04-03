@@ -1,4 +1,4 @@
-import { IKanji, QuestionType, IQuestion } from "./review";
+import { IKanji, QuestionType, IQuestion } from "./Review";
 
 function random(min: number, max: number): number {
     return Math.random() * (max - min) +  min;

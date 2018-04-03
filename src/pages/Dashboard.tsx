@@ -9,7 +9,7 @@ import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Button from "material-ui/Button";
 
-import { getRecentItems, getFailedItems } from "../backend/user";
+import { getRecentItems, getFailedItems } from "../backend/User";
 
 const decorate = withStyles(({ palette, spacing }) => ({
     paper: {

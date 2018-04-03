@@ -1,4 +1,4 @@
-import { IKanji } from "../models/review";
+import { IKanji } from "../models/Review";
 
 /*
   Retrieves the user's recently added kanji.
