@@ -5,7 +5,8 @@ module.exports = {
         'scope-enum': [2, 'always', [
             "comp",
             "build",
-            "vcs"
+            "vcs",
+            "backend"
         ]],
         'scope-case': [2, "always", "lower-case"],
         'subject-case': [2, "always", "sentence-case"],
