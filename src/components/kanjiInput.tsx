@@ -2,7 +2,10 @@ import * as React from "react";
 
 import Textfield from "material-ui/TextField";
 
-import { QuestionType } from "./kanjiView"
+//@ts-ignore
+import { toKana } from "wanakana";
+
+import { QuestionType } from "../models/review";
 
 interface IKanjiInputProps {
     validate: (input: string) => void;
@@ -34,8 +37,23 @@ class KanjiInput extends React.Component<IKanjiInputProps, IKanjiInputState> {
 
 
     handleChange(evt: any) {
+        let input = evt.target.value;
+        // Only use toKana, when we really want the reading
+        /*
+           TODO: On mobile, we experience a significant input lag
+
+           The official docs suggest doing this
+           ```
+           var textInput = document.getElementById('wanakana-input');
+           wanakana.bind(textInput, options);
+           ```
+         */
+        if (this.props.type == QuestionType.Reading) {
+            input = toKana(input);
+        }
+
         this.setState({
-            input: evt.target.value
+            input: input
         });
     }
 
@@ -60,12 +78,10 @@ class KanjiInput extends React.Component<IKanjiInputProps, IKanjiInputState> {
                 onChange={this.handleChange}
                 onKeyPress={this.handleKeyPress}
                 placeholder={this.QTypeToName(this.props.type)}
+                fullWidth={true}
             ></Textfield>
         </div>
     }
-
-
-
 }
 
 export default KanjiInput

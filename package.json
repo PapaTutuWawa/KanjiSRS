@@ -9,7 +9,8 @@
         "react": "latest",
         "react-dom": "latest",
         "react-router-dom": "^4.2.2",
-        "react-scripts-ts": "latest"
+        "react-scripts-ts": "latest",
+        "wanakana": "^3.1.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^6.1.3",
