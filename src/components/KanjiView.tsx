@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import Grow from "material-ui/transitions/Grow";
-import Paper from "material-ui/Paper";
 import Card, { CardContent, CardActions } from "material-ui/Card";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
+import Popover from "material-ui/Popover";
 
 import KanjiInput from "./KanjiInput";
 
@@ -16,9 +15,10 @@ import { IKanji,
 
 interface IKanjiViewState {
     kanjiIndex: number;
-    grow: boolean;
 
+    popupMessage: string;
     popupOpen: boolean;
+
     correct: boolean;
 }
 
@@ -41,24 +41,23 @@ const decorate = withStyles(() => ({
         'margin-top': 10,
         padding: 10,
     },
-    popup: {
-        padding: 10,
-        'margin-left': 10,
-        width: 100,
-        height: 100,
+    popupText: {
+        margin: 20,
     }
 }));
 
 const dClass = decorate(
-    class KanjiView extends React.Component<WithStyles<"card"> & WithStyles<"popup">, IKanjiViewState> {
-        private popupMessage: string = "";
+    class KanjiView extends React.Component<WithStyles<"card"> & WithStyles<"popupText">, IKanjiViewState> {
+        // Needed for the Popover to be positioned next to the Kanji
+        private kanjiRef: any = null;
 
         constructor(props: any) {
             super(props);
 
             this.state = {
                 kanjiIndex: 0,
-                grow: false,
+
+                popupMessage: "Correct",
                 popupOpen: false,
                 correct: true // Let's stay positive
             };
@@ -76,9 +75,8 @@ const dClass = decorate(
             });
         }
         showPopup(msg: string) {
-            this.popupMessage = msg;
-
             this.setState({
+                popupMessage: msg,
                 popupOpen: true
             });
 
@@ -133,8 +131,7 @@ const dClass = decorate(
 
             if (this.state.kanjiIndex + 1 >= queue.length) return;
             this.setState({
-                kanjiIndex: this.state.kanjiIndex + 1,
-                grow: !this.state.grow,
+                kanjiIndex: this.state.kanjiIndex + 1
             });
         }
 
@@ -147,20 +144,38 @@ const dClass = decorate(
                             <Typography
                                 variant="display4"
                                 color="inherit"
-                            >{queue[this.state.kanjiIndex].kanji.char}</Typography>
-                            <Grow in={this.state.popupOpen}>
-                                <Paper elevation={4} className={classes.popup} style={{
+                            ><span
+                                 ref={(node) => this.kanjiRef = node }
+                             >{queue[this.state.kanjiIndex].kanji.char}</span></Typography>
+                        </Grid>
+                        <Popover
+                            open={this.state.popupOpen}
+                            anchorEl={this.kanjiRef}
+                            anchorReference="anchorEl"
+                            anchorPosition={{ top: 0, left: 0 }}
+                            onClose={() => {} }
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                            }}
+                            PaperProps={{
+                                style: {
                                     // If the answer given was correct, then the paper should appear green. But
                                     // if the answer was wrong, then the paper should be red.
                                     'background-color': this.state.correct ? "#26A65B" : "#f03434",
-                                    color: this.state.correct ? "white" : "black"
-                                }}>
-                                    <Grid container justify="center">
-                                        {this.popupMessage}
-                                    </Grid>
-                                </Paper>
-                            </Grow>
-                        </Grid>
+                                    color: "white",
+                                }
+                            }}
+                        >
+                            <Typography
+                                className={classes.popupText}
+                                variant="title"
+                                color="inherit">{this.state.popupMessage}</Typography>
+                        </Popover>
                     </CardContent>
                     <CardActions>
                         <Grid container justify="center">
@@ -174,6 +189,6 @@ const dClass = decorate(
                 </Card>
             </div>;
         }
-});
+    });
 
 export { dClass as KanjiView, QuestionType };
