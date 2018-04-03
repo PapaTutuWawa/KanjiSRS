@@ -9,31 +9,53 @@ import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Button from "material-ui/Button";
 
+import { getRecentItems, getFailedItems } from "../backend/user";
+
 const decorate = withStyles(({ palette, spacing }) => ({
-    root: {
-        padding: spacing.unit,
-        backgroundColor: palette.background,
-        color: palette.primary,
-    },
     paper: {
         padding: 15,
         margin: 20,
-        height: 400
+    },
+    reviewButton: {
+        'margin-bottom': 10,
+    },
+    root: {
+        flexGrow: 1,
+        'flex-wrap': "wrap",
     }
 }));
 
-const MyLink = (props: any) => <Link to="/review" {...props} />;
-
+const ReviewLink = (props: any) => <Link to="/review" {...props} />;
+const PostReviewLink = (props: any) => <Link to="/postReview" {...props} />;
 const dClass = decorate(
-    class Dashboard extends React.Component<WithStyles<"root"> & WithStyles<"paper">, {}> {
+    class Dashboard extends React.Component<WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">, {}> {
         render() {
             // Destructure, so that we have a shortcut to this.props.classes
             const { classes } = this.props;
+
+            // Fetch the recent and failed items
+            const recentItems = getRecentItems().map((kanji) => {
+                return <ListItem button key={kanji.char}>
+                    <ListItemText primary={kanji.char} />
+                </ListItem>;
+            });
+            const failedItems = getFailedItems().map((kanji) => {
+                return <ListItem button key={kanji.char}>
+                    <ListItemText primary={kanji.char} />
+                </ListItem>;
+            });
+
             return <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={4}>
+                <Grid container spacing={8} className={classes.root}>
+                    <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
-                            <Button fullWidth={true} component={MyLink}>Review</Button>
+                            <Button
+                                className={classes.reviewButton}
+                                fullWidth={true}
+                                component={ReviewLink}
+                                variant="raised"
+                                color="primary"
+                            >Review</Button>
                             <Typography variant="title">Last Review:</Typography>
                             // TODO: Put this in its own component
                             <List component="nav">
@@ -43,26 +65,25 @@ const dClass = decorate(
                             </List>
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
+                            <Button
+                                className={classes.reviewButton}
+                                fullWidth={true}
+                                component={PostReviewLink}
+                                variant="raised"
+                                color="secondary"
+                            >Last Review</Button>
                             <Typography variant="title">Recently Added Items:</Typography>
                             // TODO: Put this in its own component
-                            <List component="nav">
-                                <ListItem button>
-                                    <ListItemText primary="僕" />
-                                </ListItem>
-                            </List>
+                            <List component="nav">{recentItems}</List>
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
                             <Typography variant="title">Recently Failed Items:</Typography>
                             // TODO: Put this in its own component
-                            <List component="nav">
-                                <ListItem button>
-                                    <ListItemText primary="出" />
-                                </ListItem>
-                            </List>
+                            <List component="nav">{failedItems}</List>
                         </Paper>
                     </Grid>
                 </Grid>
