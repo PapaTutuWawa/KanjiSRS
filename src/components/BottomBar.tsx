@@ -7,7 +7,7 @@ import FavoriteIcon from "material-ui-icons/Favorite";
 
 export default class BottomBar extends React.Component<{}, {}> {
     render() {
-        return <div>
+        return <div className="BottomBar">
             <BottomNavigation>
                 <a href="https://github.com/Polynomdivision/KanjiSRS">
                     <Tooltip placement="top" title="The Github Repository">
