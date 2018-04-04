@@ -15,6 +15,7 @@ const decorate = withStyles(({ palette, spacing }) => ({
     paper: {
         padding: 15,
         margin: 20,
+        'min-width': 300,
     },
     reviewButton: {
         'margin-bottom': 10,
@@ -27,8 +28,9 @@ const decorate = withStyles(({ palette, spacing }) => ({
 
 const ReviewLink = (props: any) => <Link to="/review" {...props} />;
 const PostReviewLink = (props: any) => <Link to="/postReview" {...props} />;
+type StyleAttributes = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
 const dClass = decorate(
-    class Dashboard extends React.Component<WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">, {}> {
+    class Dashboard extends React.Component<StyleAttributes, {}> {
         render() {
             // Destructure, so that we have a shortcut to this.props.classes
             const { classes } = this.props;
@@ -46,7 +48,7 @@ const dClass = decorate(
             });
 
             return <div>
-                <Grid container spacing={8} className={classes.root}>
+                <Grid container className={classes.root}>
                     <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
                             <Button
