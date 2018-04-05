@@ -5,6 +5,8 @@ import Tooltip from "material-ui/Tooltip";
 
 import FavoriteIcon from "material-ui-icons/Favorite";
 
+import GithubIcon from "./GithubIcon";
+
 export default class BottomBar extends React.Component<{}, {}> {
     render() {
         return <div className="BottomBar">
@@ -14,7 +16,7 @@ export default class BottomBar extends React.Component<{}, {}> {
                         <BottomNavigationAction
                             label="GitHub"
                             icon={
-                                <img src="assets/github.png" />
+                                <GithubIcon />
                             }
                         />
                     </Tooltip>
