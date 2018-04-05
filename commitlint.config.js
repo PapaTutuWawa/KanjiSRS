@@ -3,6 +3,7 @@ module.exports = {
         'header-max-length': [2, "always", 50],
         'scope-enum': [2, 'always', [
             "comp",
+            "page",
             "build",
             "vcs",
             "backend",

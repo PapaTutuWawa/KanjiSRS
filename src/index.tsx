@@ -9,6 +9,7 @@ import Topbar from "./components/TopBar";
 import Review from "./pages/Review";
 import Dashboard from "./pages/Dashboard";
 import PostReview from "./pages/PostReview";
+import Login from "./pages/Login";
 import BottomBar from "./components/BottomBar";
 
 ReactDOM.render(
@@ -17,7 +18,8 @@ ReactDOM.render(
         <BrowserRouter>
             <div>
                 <Topbar />
-                <Route exact={true} path="/" component={() => <Redirect to="/dashboard" /> } />
+                <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
+                <Route path="/login" component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/review" component={Review} />
                 <Route path="/postReview" component={PostReview} />
