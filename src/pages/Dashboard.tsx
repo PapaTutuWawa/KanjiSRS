@@ -27,7 +27,6 @@ const decorate = withStyles(() => ({
 }));
 
 const ReviewLink = (props: any) => <Link to="/review" {...props} />;
-const PostReviewLink = (props: any) => <Link to="/postReview" {...props} />;
 type StyleAttributes = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
 const dClass = decorate(
     class Dashboard extends React.Component<StyleAttributes, {}> {
@@ -69,13 +68,6 @@ const dClass = decorate(
                     </Grid>
                     <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
-                            <Button
-                                className={classes.reviewButton}
-                                fullWidth={true}
-                                component={PostReviewLink}
-                                variant="raised"
-                                color="secondary"
-                            >Last Review</Button>
                             <Typography variant="title">Recently Added Items:</Typography>
                             // TODO: Put this in its own component
                             <List component="nav">{recentItems}</List>
