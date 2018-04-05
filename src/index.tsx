@@ -10,7 +10,10 @@ import Review from "./pages/Review";
 import Dashboard from "./pages/Dashboard";
 import PostReview from "./pages/PostReview";
 import Login from "./pages/Login";
+import KanjiList from "./pages/KanjiList";
 import BottomBar from "./components/BottomBar";
+
+// TODO: Maybe remove the PostReview Page
 
 ReactDOM.render(
     <React.Fragment>
@@ -23,6 +26,7 @@ ReactDOM.render(
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/review" component={Review} />
                 <Route path="/postReview" component={PostReview} />
+                <Route path="/kanjilist" component={KanjiList} />
             </div>
         </BrowserRouter>
         <BottomBar />
