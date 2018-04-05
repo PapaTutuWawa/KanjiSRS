@@ -11,7 +11,7 @@ import Modal from "material-ui/Modal";
 
 import { Redirect } from "react-router-dom";
 
-const decorate = withStyles(({ palette, spacing }) => ({
+const decorate = withStyles(() => ({
     paper: {
         padding: 15,
         margin: 20,

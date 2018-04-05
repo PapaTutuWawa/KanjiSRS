@@ -11,7 +11,7 @@ import Button from "material-ui/Button";
 
 import { getRecentItems, getFailedItems } from "../backend/User";
 
-const decorate = withStyles(({ palette, spacing }) => ({
+const decorate = withStyles(() => ({
     paper: {
         padding: 15,
         margin: 20,
