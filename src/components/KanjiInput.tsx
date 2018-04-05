@@ -77,7 +77,7 @@ class KanjiInput extends React.Component<IKanjiInputProps, IKanjiInputState> {
                 value={this.state.input}
                 onChange={this.handleChange}
                 onKeyPress={this.handleKeyPress}
-                placeholder={this.QTypeToName(this.props.type)}
+                label={this.QTypeToName(this.props.type)}
                 fullWidth={true}
             ></Textfield>
         </div>
