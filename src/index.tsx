@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 import CssBaseline from "material-ui/CssBaseline";
 
@@ -17,7 +17,8 @@ ReactDOM.render(
         <BrowserRouter>
             <div>
                 <Topbar />
-                <Route exact={true} path="/" component={Dashboard} />
+                <Route exact={true} path="/" component={() => <Redirect to="/dashboard" /> } />
+                <Route path="/dashboard" component={Dashboard} />
                 <Route path="/review" component={Review} />
                 <Route path="/postReview" component={PostReview} />
             </div>
