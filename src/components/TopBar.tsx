@@ -8,6 +8,7 @@ import SwipeableDrawer from "material-ui/SwipeableDrawer";
 import List, { ListItem, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import Divider from "material-ui/Divider";
+import Button from "material-ui/Button";
 
 import MenuIcon from "material-ui-icons/Menu";
 import AccountCircle from "material-ui-icons/AccountCircle";
@@ -19,6 +20,7 @@ interface ITopbarState {
 }
 
 const DashboardLink = (props: any) => <Link to="/dashboard" {...props} />;
+const KanjiListLink = (props: any) => <Link to="/kanjilist" {...props} />;
 
 export default class Topbar extends React.Component<{}, ITopbarState> {
     constructor(props: any) {
@@ -59,13 +61,11 @@ export default class Topbar extends React.Component<{}, ITopbarState> {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        variant="title"
-                        color="inherit"
-                        className="MenuText"
-                    >
-                        Kanji SRS
-                    </Typography>
+                    <Button component={DashboardLink}>
+                        <Typography variant="title" color="inherit">
+                            Kanji SRS
+                        </Typography>
+                    </Button>
                 </Toolbar>
             </AppBar>
             <SwipeableDrawer
@@ -91,7 +91,7 @@ export default class Topbar extends React.Component<{}, ITopbarState> {
                             <ListItemText primary="Dashboard" />
                         </ListItem>
                         <Divider />
-                        <ListItem button>
+                        <ListItem button component={KanjiListLink}>
                             <ListItemText primary="Your Kanji" />
                         </ListItem>
                     </List>
