@@ -17,7 +17,7 @@ const dClass = decorate(
             const { classes } = this.props;
             return <div>
                 <Grid container justify="center">
-                    <Grid item xs className={classes.review}>
+                    <Grid item xs={12} lg={3} className={classes.review}>
                         <KanjiView  />
                     </Grid>
                 </Grid>
