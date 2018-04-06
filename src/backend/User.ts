@@ -7,19 +7,19 @@ import { IKanji } from "../models/Review";
 export function getRecentItems(): IKanji[] {
     return [{
         char: "前",
-        reading: "mae",
+        reading: "まえ",
         meaning: "Before"
     }, {
         char: "出",
-        reading: "shutsu",
+        reading: "しゅつ",
         meaning: "Exit"
     }, {
         char: "大切",
-        reading: "taisetsu",
+        reading: "たいせつ",
         meaning: "important"
     }, {
         char: "大",
-        reading: "tai",
+        reading: "たい",
         meaning: "big"
     }];
 };
