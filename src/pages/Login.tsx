@@ -26,45 +26,46 @@ const decorate = withStyles(() => ({
 }));
 
 interface ILoginState {
-    auth: boolean;
-    loading: boolean;
+    waiting: boolean;
+}
+
+interface ILoginProps {
+    login: (username: string, password: string) => boolean;
+    auth: () => boolean;
 }
 
 type Style = WithStyles<"paper"> & WithStyles<"input"> & WithStyles<"loginButton">;
 const dClass = decorate(
-    class Login extends React.Component<Style, ILoginState> {
+    class Login extends React.Component<Style & ILoginProps, ILoginState> {
         constructor(props: any) {
             super(props);
 
             this.state = {
-                auth: false,
-                loading: false,
+                waiting: false,
             };
 
             this.handleLogin = this.handleLogin.bind(this);
         }
 
-        handleLogin(evt: any) {
+        async handleLogin(evt: any) {
+            // Show the Waiting Circle
             this.setState({
-                loading: true,
+                waiting: true,
             });
 
-            setTimeout(() => {
-                this.setState({
-                    auth: true
-                });
-            }, 3000);
+            // Wait for the login to be done
+            await this.props.login("", "");
         }
 
         render() {
             const { classes } = this.props;
 
             return <div>
-                { this.state.auth ? <Redirect to="/dashboard" /> : null }
+                { this.props.auth() ? <Redirect to="/dashboard" /> : null }
                 <Modal
                     aria-labelledby="Logging you in"
                     aria-describedby="Please wait..."
-                    open={this.state.loading}
+                    open={this.state.waiting}
                     onClose={() => {} }
                 >
                     <Grid container direction="row" justify="center">
