@@ -38,7 +38,7 @@ interface ILoginState {
 
 interface ILoginProps {
     login: (username: string, password: string) => Promise<string>;
-    auth: () => boolean;
+    isAuth: () => boolean;
 }
 
 type Style = WithStyles<"paper"> & WithStyles<"input"> & WithStyles<"loginButton"> & WithStyles<"popupText">;
@@ -124,7 +124,7 @@ const dClass = decorate(
             const { classes } = this.props;
 
             return <div>
-                { this.props.auth() ? <Redirect to="/dashboard" /> : null }
+                { this.props.isAuth() ? <Redirect to="/dashboard" /> : null }
                 <Modal
                     aria-labelledby="Logging you in"
                     aria-describedby="Please wait..."

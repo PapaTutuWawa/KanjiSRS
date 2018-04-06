@@ -24,7 +24,6 @@ export default class Application extends React.Component<{}, IApplicationState> 
         super(props);
 
         this.state = {
-            // TODO: Definetely change!
             auth: false,
         };
 
@@ -37,7 +36,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
     // Implementation
     // NOTE: If we succeed in logging in, we will resolve the Promise. If we fail, we
     //       reject the Promise.
-    async login(username: string, password: string): Promise<string> {
+    login(username: string, password: string): Promise<string> {
         return new Promise<string>((res, rej) => {
             // Just to see the timeout
             setTimeout(() => {
@@ -46,7 +45,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
                         auth: true,
                     });
 
-                    res();
+                    res("");
                 } else {
                     rej("Wrong username or password");
                 }
@@ -65,7 +64,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
                 <div>
                     <Topbar />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
-                    <Route path="/login" component={() => <Login login={this.login} auth={this.checkAuth} /> } />
+                    <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
                     <AuthRoute path="/dashboard" component={Dashboard} isAuth={this.checkAuth} />
                     <AuthRoute path="/review" component={Review} isAuth={this.checkAuth} />
                     <AuthRoute path="/postReview" component={PostReview} isAuth={this.checkAuth} />
