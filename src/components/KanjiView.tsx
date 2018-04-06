@@ -166,7 +166,7 @@ const dClass = decorate(
                                 style: {
                                     // If the answer given was correct, then the paper should appear green. But
                                     // if the answer was wrong, then the paper should be red.
-                                    'background-color': this.state.correct ? "#26A65B" : "#f03434",
+                                    backgroundColor: this.state.correct ? "#26A65B" : "#f03434",
                                     color: "white",
                                 }
                             }}
