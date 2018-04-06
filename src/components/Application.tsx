@@ -62,7 +62,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
             <CssBaseline />
             <BrowserRouter>
                 <div>
-                    <Topbar />
+                    <Topbar isAuth={this.checkAuth} />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
                     <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
                     <AuthRoute path="/dashboard" component={Dashboard} isAuth={this.checkAuth} />

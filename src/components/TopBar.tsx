@@ -15,14 +15,20 @@ import AccountCircle from "material-ui-icons/AccountCircle";
 
 import { Link } from "react-router-dom";
 
+import { getUsername } from "../backend/User";
+
 interface ITopbarState {
     drawerOpen: boolean;
+}
+
+interface ITopbarProps {
+    isAuth: () => boolean;
 }
 
 const DashboardLink = (props: any) => <Link to="/dashboard" {...props} />;
 const KanjiListLink = (props: any) => <Link to="/kanjilist" {...props} />;
 
-export default class Topbar extends React.Component<{}, ITopbarState> {
+export default class Topbar extends React.Component<ITopbarProps, ITopbarState> {
     constructor(props: any) {
         super(props);
 
@@ -48,19 +54,23 @@ export default class Topbar extends React.Component<{}, ITopbarState> {
 
     render() {
         // TODO: Move the Drawer into its own component
+        const auth = this.props.isAuth();
         return <div>
             <AppBar position="static" color="default">
                 <Toolbar>
-                    <IconButton
-                        aria-label="Menu"
-                        onClick={() => this.openDrawer() }
-                        style={{
-                            marginRight: 20,
-                            cursor: "pointer",
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    { auth ?
+                      <IconButton
+                          aria-label="Menu"
+                          onClick={() => this.openDrawer() }
+                          style={{
+                              marginRight: 20,
+                              cursor: "pointer",
+                          }}
+                          >
+                          <MenuIcon />
+                      </IconButton>
+                      : null
+                    }
                     <Button component={DashboardLink}>
                         <Typography variant="title" color="inherit">
                             Kanji SRS
@@ -68,35 +78,38 @@ export default class Topbar extends React.Component<{}, ITopbarState> {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <SwipeableDrawer
-                anchor="left"
-                open={this.state.drawerOpen}
-                onOpen={this.openDrawer}
-                onClose={this.closeDrawer}
-            >
-                <div
-                    tabIndex={0}
-                    onClick={this.closeDrawer}
-                    onKeyDown={this.closeDrawer}
-                    role="button"
-                >
-                    <List className="DrawerList">
-                        <ListItem button>
-                            <Avatar>
-                                <AccountCircle />
-                            </Avatar>
-                            <ListItemText primary="Account" />
-                        </ListItem>
-                        <ListItem button component={DashboardLink}>
-                            <ListItemText primary="Dashboard" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button component={KanjiListLink}>
-                            <ListItemText primary="Your Kanji" />
-                        </ListItem>
-                    </List>
-                </div>
-            </SwipeableDrawer>
+            { auth ?
+              <SwipeableDrawer
+                  anchor="left"
+                  open={this.state.drawerOpen}
+                  onOpen={this.openDrawer}
+                  onClose={this.closeDrawer}
+                  >
+                  <div
+                      tabIndex={0}
+                      onClick={this.closeDrawer}
+                      onKeyDown={this.closeDrawer}
+                      role="button"
+                  >
+                      <List className="DrawerList">
+                          <ListItem button>
+                              <Avatar>
+                                  <AccountCircle />
+                              </Avatar>
+                              <ListItemText primary={getUsername()} />
+                          </ListItem>
+                          <ListItem button component={DashboardLink}>
+                              <ListItemText primary="Dashboard" />
+                          </ListItem>
+                          <Divider />
+                          <ListItem button component={KanjiListLink}>
+                              <ListItemText primary="Your Kanji" />
+                          </ListItem>
+                      </List>
+                  </div>
+              </SwipeableDrawer>
+              : null
+            }
         </div>;
     }
 }
