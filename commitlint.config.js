@@ -7,7 +7,8 @@ module.exports = {
             "build",
             "vcs",
             "backend",
-            "misc"
+            "misc",
+            "model"
         ]],
         'scope-case': [2, "always", "lower-case"],
         'subject-case': [2, "always", "sentence-case"],

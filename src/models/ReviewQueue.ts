@@ -1,7 +1,7 @@
 import { IKanji, QuestionType, IQuestion } from "./Review";
 
-function random(min: number, max: number): number {
-    return Math.random() * (max - min) +  min;
+function intRandom(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min) +  min);
 }
 
 /*
@@ -25,17 +25,16 @@ export function generateQuestionQueue(kanjis: IKanji[]): IQuestion[] {
 };
 
 /*
-  For a "Review Queue" of n elements, this function will randomly swap
-  two elements from the "Queue" n times.
+  Shuffles the Review Queue using a Fisher–Yates shuffle.
+  (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
 */
 export function shuffleQuestionQueue(questions: IQuestion[]): IQuestion[] {
-    for (let i = 0; i < questions.length; i++) {
-        let a = random(0, questions.length);
-        let b = random(0, questions.length);
-        let tmp = questions[b];
+    for(let i = questions.length - 1; i >= 1; i--) {
+        const j = intRandom(0, i);
+        const tmp = questions[i];
 
-        questions[b] = questions[a];
-        questions[a] = tmp;
+        questions[i] = questions[j];
+        questions[j] = tmp;
     }
 
     return questions;
