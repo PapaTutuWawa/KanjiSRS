@@ -5,7 +5,7 @@ import Tooltip from "material-ui/Tooltip";
 
 import FavoriteIcon from "material-ui-icons/Favorite";
 
-import GithubIcon from "./GithubIcon";
+import GithubIcon from "./icons/GithubIcon";
 
 export default class BottomBar extends React.Component<{}, {}> {
     render() {
