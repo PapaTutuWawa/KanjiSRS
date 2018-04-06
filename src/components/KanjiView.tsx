@@ -8,33 +8,19 @@ import Popover from "material-ui/Popover";
 
 import KanjiInput from "./KanjiInput";
 
-import { IKanji,
-         QuestionType,
-         generateQuestionQueue,
-         shuffleQuestionQueue } from "../models/ReviewQueue";
+import { IQuestion, QuestionType } from "../models/ReviewQueue";
 
 interface IKanjiViewState {
-    kanjiIndex: number;
-
     popupMessage: string;
     popupOpen: boolean;
 
     correct: boolean;
 }
 
-const kanjis: IKanji[] = [
-    {
-        char: "前",
-        reading: "まえ",
-        meaning: "Before"
-    }, {
-        char: "出",
-        reading: "しゅつ",
-        meaning: "Exit"
-    }
-];
-
-const queue = shuffleQuestionQueue(generateQuestionQueue(kanjis));
+interface IKanjiViewProps {
+    question: IQuestion;
+    validate: (answer: string) => boolean;
+}
 
 const decorate = withStyles(() => ({
     card: {
@@ -46,17 +32,18 @@ const decorate = withStyles(() => ({
     }
 }));
 
+// TODO: We cause a setState after dismount somewhere!
+type Style = WithStyles<"card"> & WithStyles<"popupText">;
 const dClass = decorate(
-    class KanjiView extends React.Component<WithStyles<"card"> & WithStyles<"popupText">, IKanjiViewState> {
+    class KanjiView extends React.Component<Style & IKanjiViewProps, IKanjiViewState> {
         // Needed for the Popover to be positioned next to the Kanji
         private kanjiRef: any = null;
+        private popupTimeout: any = null;
 
         constructor(props: any) {
             super(props);
 
             this.state = {
-                kanjiIndex: 0,
-
                 popupMessage: "Correct",
                 popupOpen: false,
                 correct: true // Let's stay positive
@@ -75,12 +62,17 @@ const dClass = decorate(
             });
         }
         showPopup(msg: string) {
+
             this.setState({
                 popupMessage: msg,
                 popupOpen: true
             });
 
-            setTimeout(this.resetPopup, 1000);
+            this.popupTimeout = setTimeout(this.resetPopup, 1000);
+        }
+
+        componentWillDismount() {
+            clearTimeout(this.popupTimeout);
         }
 
         checkAnswer(input: string) {
@@ -109,34 +101,15 @@ const dClass = decorate(
                 this.showPopup("Wrong")
             };
 
-            // Check if the reading or the meaning was correct and show the appropriate popup
-            switch (queue[this.state.kanjiIndex].type) {
-                case QuestionType.Reading:
-                    if (input === queue[this.state.kanjiIndex].kanji.reading) {
-                        correct();
-                    } else {
-                        wrong();
-                        return;
-                    }
-                    break;
-                case QuestionType.Meaning:
-                    if (input.toLowerCase() === queue[this.state.kanjiIndex].kanji.meaning.toLowerCase()) {
-                        correct();
-                    } else {
-                        wrong();
-                        return;
-                    }
-                    break;
+            if (this.props.validate(input)) {
+                correct();
+            } else {
+                wrong();
             }
-
-            if (this.state.kanjiIndex + 1 >= queue.length) return;
-            this.setState({
-                kanjiIndex: this.state.kanjiIndex + 1
-            });
         }
 
         render(): any {
-            const { classes } = this.props;
+            const { question, classes } = this.props;
             return <div>
                 <Card className={classes.card}>
                     <CardContent>
@@ -146,7 +119,7 @@ const dClass = decorate(
                                 color="inherit"
                             ><span
                                  ref={(node) => this.kanjiRef = node }
-                             >{queue[this.state.kanjiIndex].kanji.char}</span></Typography>
+                             >{question.kanji.char}</span></Typography>
                         </Grid>
                         <Popover
                             open={this.state.popupOpen}
@@ -181,7 +154,7 @@ const dClass = decorate(
                         <Grid container justify="center">
                             <KanjiInput
                                 ref="input"
-                                type={queue[this.state.kanjiIndex].type}
+                                type={question.type}
                                 validate={this.checkAnswer}
                             />
                         </Grid>

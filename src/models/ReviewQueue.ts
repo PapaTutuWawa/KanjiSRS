@@ -10,14 +10,17 @@ function intRandom(min: number, max: number): number {
 */
 export function generateQuestionQueue(kanjis: IKanji[]): IQuestion[] {
     let ret: IQuestion[] = [];
+    let i = 0;
     kanjis.forEach((kanji) => {
         ret.push({
             type: QuestionType.Reading,
-            kanji: kanji
+            kanji: kanji,
+            id: i++,
         });
         ret.push({
             type: QuestionType.Meaning,
-            kanji: kanji
+            kanji: kanji,
+            id: i++,
         });
     });
 

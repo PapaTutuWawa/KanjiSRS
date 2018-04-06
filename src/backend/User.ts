@@ -40,6 +40,18 @@ export function getFailedItems(): IKanji[] {
     }];
 };
 
+export function getReviewVocab(): IKanji[] {
+    return [{
+        char: "切る",
+        reading: "きる",
+        meaning: "to cut"
+    }, {
+        char: "切れる",
+        reading: "きれる",
+        meaning: "to be cut"
+    }];
+}
+
 /*
   TODO: Actually retrieve the username from somewhere
  */
