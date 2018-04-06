@@ -18,14 +18,12 @@ const dClass = decorate(
         render() {
             const { classes } = this.props;
             return <div>
-                <Grid container>
-                    <Grid item xs={4} />
-                    <Grid item xs={4}>
+                <Grid container justify="center">
+                    <Grid item xs={12} lg={4}>
                         <Paper elevation={4} className={classes.paper}>
                             Stuff
                         </Paper>
                     </Grid>
-                    <Grid item xs={4} />
                 </Grid>
             </div>;
         }
