@@ -41,11 +41,15 @@ export default class Application extends React.Component<{}, IApplicationState> 
         return new Promise<string>((res, rej) => {
             // Just to see the timeout
             setTimeout(() => {
-                this.setState({
-                    auth: true,
-                });
+                if (username === "test" && password === "test") {
+                    this.setState({
+                        auth: true,
+                    });
 
-                res();
+                    res();
+                } else {
+                    rej("Wrong username or password");
+                }
             }, 3000);
         });
     }
@@ -66,9 +70,9 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     <AuthRoute path="/review" component={Review} isAuth={this.checkAuth} />
                     <AuthRoute path="/postReview" component={PostReview} isAuth={this.checkAuth} />
                     <AuthRoute path="/kanjilist" component={KanjiList} isAuth={this.checkAuth} />
+                    <BottomBar />
                 </div>
             </BrowserRouter>
-            <BottomBar />
         </React.Fragment>;
     }
 };
