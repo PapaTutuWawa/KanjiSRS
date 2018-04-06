@@ -39,3 +39,10 @@ export function getFailedItems(): IKanji[] {
         meaning: "to be cut"
     }];
 };
+
+/*
+  TODO: Actually retrieve the username from somewhere
+ */
+export function getUsername(): string {
+    return "Polynomdivision";
+};
