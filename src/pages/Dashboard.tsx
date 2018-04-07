@@ -86,15 +86,13 @@ const dClass = decorate(
                     </Grid>
                     <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
-                            <Typography variant="title">Recently Added Items:</Typography>
-                            // TODO: Put this in its own component
+                            <Typography variant="title">Recently Added Items</Typography>
                             <List component="nav">{recentItems}</List>
                         </Paper>
                     </Grid>
                     <Grid item xs>
                         <Paper elevation={4} className={classes.paper}>
-                            <Typography variant="title">Recently Failed Items:</Typography>
-                            // TODO: Put this in its own component
+                            <Typography variant="title">Recently Failed Items</Typography>
                             <List component="nav">{failedItems}</List>
                         </Paper>
                     </Grid>
