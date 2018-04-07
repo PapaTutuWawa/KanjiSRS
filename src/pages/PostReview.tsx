@@ -16,7 +16,7 @@ const decorate = withStyles(({ palette, spacing }) => ({
     }
 }));
 
-const dashboardLink = (props: any) => <Link to="/dashboard" {...props} />;
+const dashboardLink = (props: any) => <Link to="/user/dashboard" {...props} />;
 
 const dClass = decorate(
     class PostReview extends React.Component<WithStyles<"paper">, {}> {

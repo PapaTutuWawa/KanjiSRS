@@ -111,7 +111,7 @@ const dClass = decorate(
             const { classes } = this.props;
             const question = this.questions[this.state.questionIndex];
             return <div>
-                { this.state.done ? <Redirect to="/postReview" /> : null }
+                { this.state.done ? <Redirect to="/user/postReview" /> : null }
                 <Grid container justify="center">
                     <Grid item xs={12} lg={3} className={classes.review}>
                         <KanjiView question={question} validate={this.validateAnswer} />

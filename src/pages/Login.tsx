@@ -123,7 +123,7 @@ const dClass = decorate(
             const { classes } = this.props;
 
             return <div>
-                { this.props.isAuth() ? <Redirect to="/dashboard" /> : null }
+                { this.props.isAuth() ? <Redirect to="/user/dashboard" /> : null }
                 <Loading show={this.state.waiting} />}
                 <Popover
                     open={this.state.popupOpen}

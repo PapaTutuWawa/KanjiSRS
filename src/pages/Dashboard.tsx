@@ -26,7 +26,7 @@ const decorate = withStyles(() => ({
     }
 }));
 
-const ReviewLink = (props: any) => <Link to="/review" {...props} />;
+const ReviewLink = (props: any) => <Link to="/user/review" {...props} />;
 type StyleAttributes = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
 const dClass = decorate(
     class Dashboard extends React.Component<StyleAttributes, {}> {

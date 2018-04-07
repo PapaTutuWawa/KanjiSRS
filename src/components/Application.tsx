@@ -12,7 +12,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Review from "../pages/Review";
 import PostReview from "../pages/PostReview";
-import KanjiList from "../pages/KanjiList";
+import VocabList from "../pages/VocabList";
 
 interface IApplicationState {
     // TODO: For debugging only!
@@ -65,10 +65,10 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     <Topbar isAuth={this.checkAuth} />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
                     <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
-                    <AuthRoute path="/dashboard" component={Dashboard} isAuth={this.checkAuth} />
-                    <AuthRoute path="/review" component={Review} isAuth={this.checkAuth} />
-                    <AuthRoute path="/postReview" component={PostReview} isAuth={this.checkAuth} />
-                    <AuthRoute path="/kanjilist" component={KanjiList} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/dashboard" component={Dashboard} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/review" component={Review} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/postReview" component={PostReview} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />
                     <BottomBar />
                 </div>
             </BrowserRouter>

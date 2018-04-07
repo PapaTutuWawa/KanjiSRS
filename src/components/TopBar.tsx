@@ -25,8 +25,8 @@ interface ITopbarProps {
     isAuth: () => boolean;
 }
 
-const DashboardLink = (props: any) => <Link to="/dashboard" {...props} />;
-const KanjiListLink = (props: any) => <Link to="/kanjilist" {...props} />;
+const DashboardLink = (props: any) => <Link to="/user/dashboard" {...props} />;
+const VocabListLink = (props: any) => <Link to="/user/vocab" {...props} />;
 
 export default class Topbar extends React.Component<ITopbarProps, ITopbarState> {
     constructor(props: any) {
@@ -102,8 +102,8 @@ export default class Topbar extends React.Component<ITopbarProps, ITopbarState> 
                               <ListItemText primary="Dashboard" />
                           </ListItem>
                           <Divider />
-                          <ListItem button component={KanjiListLink}>
-                              <ListItemText primary="Your Kanji" />
+                          <ListItem button component={VocabListLink}>
+                              <ListItemText primary="Your Vocabulary" />
                           </ListItem>
                       </List>
                   </div>

@@ -43,7 +43,7 @@ const dClass = decorate(
                         <Paper className={classes.paper}>
                             <Grid container direction="column">
                                 <Typography variant="title" color="inherit">
-                                    Your Kanji
+                                    Your Vocabulary
                                 </Typography>
                                 <Table className={classes.table}>
                                     <TableHead>
