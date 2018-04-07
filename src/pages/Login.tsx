@@ -124,7 +124,7 @@ const dClass = decorate(
 
             return <div>
                 { this.props.isAuth() ? <Redirect to="/user/dashboard" /> : null }
-                <Loading show={this.state.waiting} />}
+                <Loading show={this.state.waiting} />
                 <Popover
                     open={this.state.popupOpen}
                     anchorEl={this.loginButtonRef}
