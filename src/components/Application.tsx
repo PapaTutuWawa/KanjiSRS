@@ -18,8 +18,6 @@ import { IResult } from "../models/Review";
 import { fetchLastReview } from "../models/User";
 
 interface IApplicationState {
-    // TODO: For debugging only!
-    auth: boolean;
     lastReview: IResult[];
 }
 
@@ -29,12 +27,12 @@ export default class Application extends React.Component<{}, IApplicationState> 
         super(props);
 
         this.state = {
-            auth: false,
             lastReview: [],
         };
 
         this.checkAuth = this.checkAuth.bind(this);
         this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
         this.getLastReview = this.getLastReview.bind(this);
         this.setLastReview = this.setLastReview.bind(this);
     }
@@ -53,9 +51,11 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     // NOTE: Cookies would be nice as they are persistent, but (I think) they
                     //       that they arent as secure.
                     sessionStorage.setItem("sessionID", "abc");
-                    this.setState({
-                        auth: true,
-                    });
+
+                    // Because the application heavily depends on whether we are logged in or not,
+                    // we need to force an update, since the authentication status does not depend
+                    // on a state.
+                    this.forceUpdate();
 
                     res("");
                 } else {
@@ -69,6 +69,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
         // Perform the logout
         // TODO: Actually perform the logout
         sessionStorage.setItem("sessionID", "");
+        this.forceUpdate();
     }
 
     setLastReview(review: IResult[]) {
