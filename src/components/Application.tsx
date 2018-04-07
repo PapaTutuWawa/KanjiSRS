@@ -14,9 +14,12 @@ import Review from "../pages/Review";
 import PostReview from "../pages/PostReview";
 import VocabList from "../pages/VocabList";
 
+import { IResult } from "../models/Review";
+
 interface IApplicationState {
     // TODO: For debugging only!
     auth: boolean;
+    lastReview: IResult[];
 }
 
 export default class Application extends React.Component<{}, IApplicationState> {
@@ -25,6 +28,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
 
         this.state = {
             auth: false,
+            lastReview: [],
         };
 
         this.checkAuth = this.checkAuth.bind(this);
@@ -53,6 +57,21 @@ export default class Application extends React.Component<{}, IApplicationState> 
         });
     }
 
+    setLastReview(review: IResult[]) {
+        // TODO: Filter out unique vocab
+        this.setState({
+            lastReview: review,
+        });
+    }
+
+    getLastReview(): IResult[] {
+        return this.state.lastReview;
+    }
+
+    componentWillMount() {
+        // TODO: Fetch the last review
+    }
+
     checkAuth() {
         return this.state.auth === true;
     }
@@ -66,8 +85,12 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
                     <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
                     <AuthRoute path="/user/dashboard" component={Dashboard} isAuth={this.checkAuth} />
-                    <AuthRoute path="/user/review" component={Review} isAuth={this.checkAuth} />
-                    <AuthRoute path="/user/postReview" component={PostReview} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/review" component={() => {
+                            <Review />
+                    }} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/postReview" component={() => {
+                            <PostReview />
+                    }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />
                     <BottomBar />
                 </div>
