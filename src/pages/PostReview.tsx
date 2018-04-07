@@ -5,11 +5,11 @@ import Paper from "material-ui/Paper";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
-import List, { ListItem, ListItemText } from "material-ui/List";
+import Table, { TableHead, TableBody, TableRow, TableCell } from "material-ui/Table";
 
 import { Link } from "react-router-dom";
 
-import { IResult, ResultType } from "../models/Review";
+import { IResult, ResultType, QuestionType } from "../models/Review";
 
 const decorate = withStyles(() => ({
     paper: {
@@ -30,15 +30,24 @@ const dClass = decorate(
             const { classes } = this.props;
             const generateListItem = (function() {
                 let id = 0;
+                // TODO: Move this into its own component
                 return (result: IResult) => {
                     // TODO: The vocabulary should appear white
-                    return <ListItem button key={id++}>
-                        <ListItemText>
+                    return <TableRow key={id++}>
+                        <TableCell>
                             <Typography variant="display1" color="inherit">
-                                {result.kanji.char}
+                                {result.question.kanji.char}
                             </Typography>
-                        </ListItemText>
-                    </ListItem>;
+                        </TableCell>
+                        <TableCell>
+                            <Typography variant="body1" color="inherit">
+                                {{
+                                     [QuestionType.Reading]: "Reading",
+                                     [QuestionType.Meaning]: "Meaning",
+                                }[result.question.type]}
+                            </Typography>
+                        </TableCell>
+                    </TableRow>;
                 };
             })();
 
@@ -55,11 +64,19 @@ const dClass = decorate(
                                     color="inherit">
                                     Correct Answers
                                 </Typography>
-                                <List component="nav">
-                                    { this.props.getLastReview()
-                                          .filter((el) => el.type === ResultType.Correct)
-                                          .map((el) => generateListItem(el)) }
-                                </List>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Vocabulary</TableCell>
+                                            <TableCell>Task</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        { this.props.getLastReview()
+                                              .filter((el) => el.type === ResultType.Correct)
+                                              .map((el) => generateListItem(el)) }
+                                    </TableBody>
+                                </Table>
                                 <Button
                                     fullWidth={true}
                                     component={dashboardLink}
@@ -81,11 +98,19 @@ const dClass = decorate(
                                     color="inherit">
                                     Wrong Answers
                                 </Typography>
-                                <List component="nav">
-                                    { this.props.getLastReview()
-                                          .filter((el) => el.type === ResultType.Wrong)
-                                          .map((el) => generateListItem(el)) }
-                                </List>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Vocabulary</TableCell>
+                                            <TableCell>Task</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        { this.props.getLastReview()
+                                              .filter((el) => el.type === ResultType.Wrong)
+                                              .map((el) => generateListItem(el)) }
+                                    </TableBody>
+                                </Table>
                                 <Button
                                     fullWidth={true}
                                     component={dashboardLink}

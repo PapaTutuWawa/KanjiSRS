@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import Paper from "material-ui/Paper";
 import Grid from "material-ui/Grid";
 import List, { ListItem, ListItemText } from "material-ui/List";
+import Table, { TableHead, TableBody, TableRow, TableCell } from "material-ui/Table";
 import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Button from "material-ui/Button";
 
 import { getRecentItems, getFailedItems } from "../backend/User";
+
+import { IResult, ResultType, QuestionType } from "../models/Review";
 
 const decorate = withStyles(() => ({
     paper: {
@@ -26,24 +29,53 @@ const decorate = withStyles(() => ({
     }
 }));
 
+interface IDashboardProps {
+    getLastReview: () => IResult[];
+}
+
 const ReviewLink = (props: any) => <Link to="/user/review" {...props} />;
 type StyleAttributes = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
 const dClass = decorate(
-    class Dashboard extends React.Component<StyleAttributes, {}> {
+    class Dashboard extends React.Component<StyleAttributes & IDashboardProps, {}> {
         render() {
             // Destructure, so that we have a shortcut to this.props.classes
             const { classes } = this.props;
 
+            // TODO: Clean this mess up!
             // Fetch the recent and failed items
+            let id = 0;
             const recentItems = getRecentItems().map((kanji) => {
-                return <ListItem button key={kanji.char}>
+                return <ListItem button key={id++}>
                     <ListItemText primary={kanji.char} />
                 </ListItem>;
             });
             const failedItems = getFailedItems().map((kanji) => {
-                return <ListItem button key={kanji.char}>
+                return <ListItem button key={id++}>
                     <ListItemText primary={kanji.char} />
                 </ListItem>;
+            });
+            const itemColor = {
+                [ResultType.Correct]: "#26A65B",
+                [ResultType.Wrong]: "#f03434",
+            };
+            const itemType = {
+                [QuestionType.Meaning]: "Meaning",
+                [QuestionType.Reading]: "Reading",
+            };
+            const lastReview = this.props.getLastReview().map((result) => {
+                return <TableRow
+                           key={id++}
+                           style={{
+                               backgroundColor: itemColor[result.type],
+                               color: "white",
+                           }}>
+                <TableCell>
+                    {result.question.kanji.char}
+                </TableCell>
+                <TableCell>
+                    {itemType[result.question.type]}
+                </TableCell>
+                </TableRow>;
             });
 
             return <div>
@@ -57,13 +89,18 @@ const dClass = decorate(
                                 variant="raised"
                                 color="primary"
                             >Review</Button>
-                            <Typography variant="title">Last Review:</Typography>
-                            // TODO: Put this in its own component
-                            <List component="nav">
-                                <ListItem button>
-                                    <ListItemText primary="牛" />
-                                </ListItem>
-                            </List>
+                            <Typography variant="title">Last Review</Typography>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Vocabulary</TableCell>
+                                        <TableCell>Task</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    { lastReview }
+                                </TableBody>
+                            </Table>
                         </Paper>
                     </Grid>
                     <Grid item xs>

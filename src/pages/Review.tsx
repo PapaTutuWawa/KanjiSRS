@@ -54,16 +54,15 @@ const dClass = decorate(
 
             // If we have already marked the question, it was answered wrong. If, this time, the
             // answer is correct, we do not want to override the wrong mark.
-            if (this.state.review.find((el) => {
-                return el.id === id;
+            if (this.state.review.find((el: IResult) => {
+                return el.question.id === id;
             }) && type === ResultType.Correct) return;
 
             // Mark the answer
             this.setState({
                 review: this.state.review.concat([{
                     type: type,
-                    kanji: question.kanji,
-                    id: id
+                    question: question,
                 }])
             });
         }

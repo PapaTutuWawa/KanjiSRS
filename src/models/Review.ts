@@ -22,6 +22,5 @@ export enum ResultType {
 
 export interface IResult {
     type: ResultType;
-    kanji: IKanji;
-    id: number;
+    question: IQuestion;
 };

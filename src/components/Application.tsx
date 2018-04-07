@@ -86,7 +86,10 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     <Topbar isAuth={this.checkAuth} />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
                     <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
-                    <AuthRoute path="/user/dashboard" component={Dashboard} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/dashboard" component={() => {
+                            //@ts-ignore
+                            return <Dashboard getLastReview={this.getLastReview} />;
+                    }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/review" component={() => {
                         return <Review setLastReview={this.setLastReview} />;
                     }} isAuth={this.checkAuth} />
