@@ -33,6 +33,8 @@ export default class Application extends React.Component<{}, IApplicationState> 
 
         this.checkAuth = this.checkAuth.bind(this);
         this.login = this.login.bind(this);
+        this.getLastReview = this.getLastReview.bind(this);
+        this.setLastReview = this.setLastReview.bind(this);
     }
 
     // NOTE: Because I fear that Promises need to be used, I already implement
@@ -86,10 +88,10 @@ export default class Application extends React.Component<{}, IApplicationState> 
                     <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
                     <AuthRoute path="/user/dashboard" component={Dashboard} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/review" component={() => {
-                            <Review />
+                        return <Review setLastReview={this.setLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/postReview" component={() => {
-                            <PostReview />
+                            return <PostReview getLastReview={this.getLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />
                     <BottomBar />

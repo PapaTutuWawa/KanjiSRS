@@ -24,8 +24,12 @@ interface IReviewState {
     done: boolean;
 }
 
+interface IReviewProps {
+    setLastReview: (results: IResult[]) => void;
+}
+
 const dClass = decorate(
-    class Review extends React.Component<WithStyles<"review">, IReviewState> {
+    class Review extends React.Component<WithStyles<"review"> & IReviewProps, IReviewState> {
         private questions: IQuestion[] = [];
 
         constructor(props: any) {
@@ -45,17 +49,20 @@ const dClass = decorate(
 
         markVocab(type: ResultType) {
             // Get the question's ID
-            const id = this.questions[this.state.questionIndex].id;
+            const question = this.questions[this.state.questionIndex];
+            const id = question.id;
 
-            // Check if we already marked that answer
-            for(let i = 0; i < this.questions.length; i++) {
-                if (this.questions[this.state.questionIndex].id == id) return;
-            }
+            // If we have already marked the question, it was answered wrong. If, this time, the
+            // answer is correct, we do not want to override the wrong mark.
+            if (this.state.review.find((el) => {
+                return el.id === id;
+            }) && type === ResultType.Correct) return;
 
             // Mark the answer
             this.setState({
                 review: this.state.review.concat([{
                     type: type,
+                    kanji: question.kanji,
                     id: id
                 }])
             });
@@ -71,12 +78,16 @@ const dClass = decorate(
                 // appropriately. If not, then we just show the next question.
                 const newIndex = this.state.questionIndex + 1;
                 if (newIndex >= this.questions.length) {
+                    // Update the last review first...
+                    // ... and then go to the post review page
                     this.setState({
                         done: true,
+                    }, () => {
+                        this.props.setLastReview(this.state.review);
                     });
                 } else {
                     this.setState({
-                        questionIndex: this.state.questionIndex + 1,
+                        questionIndex: newIndex,
                     });
                 }
             };
