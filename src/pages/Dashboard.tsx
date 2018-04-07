@@ -12,7 +12,8 @@ import Button from "material-ui/Button";
 
 import { getRecentItems, getFailedItems } from "../backend/User";
 
-import { IResult, ResultType, QuestionType } from "../models/Review";
+import { IResult } from "../models/Review";
+import VocabTableRow from "../components/VocabTableRow";
 
 const decorate = withStyles(() => ({
     paper: {
@@ -54,28 +55,8 @@ const dClass = decorate(
                     <ListItemText primary={kanji.char} />
                 </ListItem>;
             });
-            const itemColor = {
-                [ResultType.Correct]: "#26A65B",
-                [ResultType.Wrong]: "#f03434",
-            };
-            const itemType = {
-                [QuestionType.Meaning]: "Meaning",
-                [QuestionType.Reading]: "Reading",
-            };
-            const lastReview = this.props.getLastReview().map((result) => {
-                return <TableRow
-                           key={id++}
-                           style={{
-                               backgroundColor: itemColor[result.type],
-                               color: "white",
-                           }}>
-                <TableCell>
-                    {result.question.kanji.char}
-                </TableCell>
-                <TableCell>
-                    {itemType[result.question.type]}
-                </TableCell>
-                </TableRow>;
+            const lastReview = this.props.getLastReview().map((result: IResult) => {
+                return <VocabTableRow key={id++} result={result} />;
             });
 
             return <div>

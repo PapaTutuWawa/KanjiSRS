@@ -9,7 +9,8 @@ import Table, { TableHead, TableBody, TableRow, TableCell } from "material-ui/Ta
 
 import { Link } from "react-router-dom";
 
-import { IResult, ResultType, QuestionType } from "../models/Review";
+import { IResult, ResultType } from "../models/Review";
+import VocabTableRow from "../components/VocabTableRow";
 
 const decorate = withStyles(() => ({
     paper: {
@@ -30,24 +31,8 @@ const dClass = decorate(
             const { classes } = this.props;
             const generateListItem = (function() {
                 let id = 0;
-                // TODO: Move this into its own component
                 return (result: IResult) => {
-                    // TODO: The vocabulary should appear white
-                    return <TableRow key={id++}>
-                        <TableCell>
-                            <Typography variant="display1" color="inherit">
-                                {result.question.kanji.char}
-                            </Typography>
-                        </TableCell>
-                        <TableCell>
-                            <Typography variant="body1" color="inherit">
-                                {{
-                                     [QuestionType.Reading]: "Reading",
-                                     [QuestionType.Meaning]: "Meaning",
-                                }[result.question.type]}
-                            </Typography>
-                        </TableCell>
-                    </TableRow>;
+                    return <VocabTableRow key={id++} result={result} />;
                 };
             })();
 
