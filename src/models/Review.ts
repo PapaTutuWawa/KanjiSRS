@@ -1,5 +1,5 @@
-export interface IKanji {
-    char: string;
+export interface IVocab {
+    japanese: string;
     reading: string;
     meaning: string;
 };
@@ -21,7 +21,7 @@ export function QuestionTypeString(qtype: QuestionType): string {
 
 export interface IQuestion {
     type: QuestionType;
-    kanji: IKanji;
+    vocab: IVocab;
     id: number;
 };
 

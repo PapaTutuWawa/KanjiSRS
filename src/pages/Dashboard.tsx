@@ -47,14 +47,14 @@ const dClass = decorate(
             // TODO: Clean this mess up!
             // Fetch the recent and failed items
             let id = 0;
-            const recentItems = getRecentItems().map((kanji) => {
+            const recentItems = getRecentItems().map((vocab) => {
                 return <ListItem button key={id++}>
-                    <ListItemText primary={kanji.char} />
+                    <ListItemText primary={vocab.japanese} />
                 </ListItem>;
             });
-            const failedItems = getFailedItems().map((kanji) => {
+            const failedItems = getFailedItems().map((vocab) => {
                 return <ListItem button key={id++}>
-                    <ListItemText primary={kanji.char} />
+                    <ListItemText primary={vocab.japanese} />
                 </ListItem>;
             });
             const lastReview = this.props.getLastReview().map((result: IResult) => {

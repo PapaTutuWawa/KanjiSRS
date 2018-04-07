@@ -119,7 +119,7 @@ const dClass = decorate(
                                 color="inherit"
                             ><span
                                  ref={(node) => this.kanjiRef = node }
-                             >{question.kanji.char}</span></Typography>
+                             >{question.vocab.japanese}</span></Typography>
                         </Grid>
                         <Popover
                             open={this.state.popupOpen}

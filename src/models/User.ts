@@ -1,24 +1,24 @@
-import { IKanji, IResult, ResultType, QuestionType } from "../models/Review";
+import { IVocab, IResult, ResultType, QuestionType } from "../models/Review";
 
 /*
   Retrieves the user's recently added kanji.
   TODO: Actually implement this
  */
-export function getRecentItems(): IKanji[] {
+export function getRecentItems(): IVocab[] {
     return [{
-        char: "前",
+        japanese: "前",
         reading: "まえ",
         meaning: "Before"
     }, {
-        char: "出",
+        japanese: "出",
         reading: "しゅつ",
         meaning: "Exit"
     }, {
-        char: "大切",
+        japanese: "大切",
         reading: "たいせつ",
         meaning: "important"
     }, {
-        char: "大",
+        japanese: "大",
         reading: "たい",
         meaning: "big"
     }];
@@ -28,25 +28,25 @@ export function getRecentItems(): IKanji[] {
   Retrieves the user's recently failed kanji.
   TODO: Actually implement this.
  */
-export function getFailedItems(): IKanji[] {
+export function getFailedItems(): IVocab[] {
     return [{
-        char: "切る",
+        japanese: "切る",
         reading: "kiru",
         meaning: "to cut"
     }, {
-        char: "切れる",
+        japanese: "切れる",
         reading: "kireru",
         meaning: "to be cut"
     }];
 };
 
-export function getReviewVocab(): IKanji[] {
+export function getReviewVocab(): IVocab[] {
     return [{
-        char: "切る",
+        japanese: "切る",
         reading: "きる",
         meaning: "to cut"
     }, {
-        char: "切れる",
+        japanese: "切れる",
         reading: "きれる",
         meaning: "to be cut"
     }];
@@ -57,8 +57,8 @@ export function fetchLastReview(): IResult[] {
         type: ResultType.Correct,
         question: {
             type: QuestionType.Reading,
-            kanji: {
-                char: "切れる",
+            vocab: {
+                japanese: "切れる",
                 reading: "きれる",
                 meaning: "to be cut",
             },
@@ -68,8 +68,8 @@ export function fetchLastReview(): IResult[] {
         type: ResultType.Wrong,
         question: {
             type: QuestionType.Meaning,
-            kanji: {
-                char: "切れる",
+            vocab: {
+                japanese: "切れる",
                 reading: "きれる",
                 meaning: "to be cut",
             },

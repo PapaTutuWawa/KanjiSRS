@@ -13,7 +13,7 @@ import Review from "../pages/Review";
 import PostReview from "../pages/PostReview";
 import VocabList from "../pages/VocabList";
 
-import { IResult } from "../models/Review";
+import { IResult, IVocab } from "../models/Review";
 import { fetchLastReview } from "../models/User";
 
 interface IApplicationState {
@@ -71,6 +71,10 @@ export default class Application extends React.Component<{}, IApplicationState> 
         this.forceUpdate();
     }
 
+    addVocabulary(vocab: IVocab): boolean {
+        return false;
+    }
+
     setLastReview(review: IResult[]) {
         this.setState({
             lastReview: review,
@@ -113,13 +117,15 @@ export default class Application extends React.Component<{}, IApplicationState> 
                             return <Dashboard getLastReview={this.getLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/review" component={() => {
-                        return <Review setLastReview={this.setLastReview} />;
+                            return <Review setLastReview={this.setLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/postReview" component={() => {
                             //@ts-ignore
                             return <PostReview getLastReview={this.getLastReview} />;
                     }} isAuth={this.checkAuth} />
-                    <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />
+                    <AuthRoute path="/user/vocab" component={() => {
+                            return <VocabList  addVocabulary={this.addVocabulary} />;
+                    }} isAuth={this.checkAuth} />
                 </div>
             </BrowserRouter>
         </React.Fragment>;

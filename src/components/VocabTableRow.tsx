@@ -18,7 +18,7 @@ export default class VocabTableRow extends React.Component<IVocabTableRowProps, 
                    }}>
             <TableCell>
                 <Typography variant="display1" color="inherit">
-                    { this.props.result.question.kanji.char }
+                    { this.props.result.question.vocab.japanese }
                 </Typography>
             </TableCell>
             <TableCell>

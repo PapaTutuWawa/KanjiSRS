@@ -1,4 +1,4 @@
-import { IKanji, QuestionType, IQuestion } from "./Review";
+import { IVocab, QuestionType, IQuestion } from "./Review";
 
 function intRandom(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) +  min);
@@ -8,18 +8,18 @@ function intRandom(min: number, max: number): number {
   Convert a list of Kanji into a list of questions, consisting of
   reading and meaning.
 */
-export function generateQuestionQueue(kanjis: IKanji[]): IQuestion[] {
+export function generateQuestionQueue(vocab: IVocab[]): IQuestion[] {
     let ret: IQuestion[] = [];
     let i = 0;
-    kanjis.forEach((kanji) => {
+    vocab.forEach((vocab) => {
         ret.push({
             type: QuestionType.Reading,
-            kanji: kanji,
+            vocab: vocab,
             id: i++,
         });
         ret.push({
             type: QuestionType.Meaning,
-            kanji: kanji,
+            vocab: vocab,
             id: i++,
         });
     });
@@ -43,4 +43,4 @@ export function shuffleQuestionQueue(questions: IQuestion[]): IQuestion[] {
     return questions;
 };
 
-export {IQuestion, QuestionType, IKanji};
+export {IQuestion, QuestionType};

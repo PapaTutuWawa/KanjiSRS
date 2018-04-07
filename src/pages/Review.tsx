@@ -98,7 +98,7 @@ const dClass = decorate(
 
             switch(question.type) {
                 case QuestionType.Reading:
-                    if (answer === question.kanji.reading) {
+                    if (answer === question.vocab.reading) {
                         continueReview();
                         markSucc();
                         return true;
@@ -107,7 +107,8 @@ const dClass = decorate(
                         return false;
                     }
                 case QuestionType.Meaning:
-                    if (answer.toLowerCase() === question.kanji.meaning.toLowerCase()) {
+                    // TODO: Maybe check if we're still close
+                    if (answer.toLowerCase() === question.vocab.meaning.toLowerCase()) {
                         continueReview();
                         markSucc();
                         return true;
