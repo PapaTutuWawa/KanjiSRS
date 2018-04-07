@@ -6,8 +6,7 @@ import Textfield from "material-ui/TextField";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
-import { CircularProgress } from "material-ui/Progress";
-import Modal from "material-ui/Modal";
+import Loading from "../components/LoadingModal";
 import Popover from "material-ui/Popover";
 
 import { Redirect } from "react-router-dom";
@@ -125,23 +124,7 @@ const dClass = decorate(
 
             return <div>
                 { this.props.isAuth() ? <Redirect to="/dashboard" /> : null }
-                <Modal
-                    aria-labelledby="Logging you in"
-                    aria-describedby="Please wait..."
-                    open={this.state.waiting}
-                    onClose={() => {} }
-                >
-                    <Grid container direction="row" justify="center">
-                        <Grid item xs={12} lg={2}>
-                            <Paper className={classes.paper}>
-                                <Typography variant="title" color="inherit">
-                                    Please wait...
-                                </Typography>
-                                <CircularProgress />
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Modal>
+                <Loading show={this.state.waiting} />}
                 <Popover
                     open={this.state.popupOpen}
                     anchorEl={this.loginButtonRef}
