@@ -79,13 +79,20 @@ export default class Application extends React.Component<{}, IApplicationState> 
     }
 
     render() {
+        /*
+           For some reason, TypeScript complains about the properties we give to the custom
+           components not matching, since we use styles (using withStyles/WithStyles). These
+           are, however, not critical, so we just silence them.
+         */
         return <React.Fragment>
             <CssBaseline />
             <BrowserRouter>
                 <div>
                     <Topbar isAuth={this.checkAuth} />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
-                    <Route path="/login" component={() => <Login login={this.login} isAuth={this.checkAuth} /> } />
+                    <Route path="/login" component={() => {
+                            return <Login login={this.login} isAuth={this.checkAuth} />;
+                    }} />
                     <AuthRoute path="/user/dashboard" component={() => {
                             //@ts-ignore
                             return <Dashboard getLastReview={this.getLastReview} />;
@@ -94,6 +101,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
                         return <Review setLastReview={this.setLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/postReview" component={() => {
+                            //@ts-ignore
                             return <PostReview getLastReview={this.getLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />

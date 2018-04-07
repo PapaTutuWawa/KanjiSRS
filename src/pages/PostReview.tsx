@@ -18,6 +18,9 @@ const decorate = withStyles(() => ({
         margin: 20,
         height: 400,
     },
+    button: {
+        marginTop: 20,
+    },
 }));
 
 interface IPostReviewProps {
@@ -25,8 +28,9 @@ interface IPostReviewProps {
 }
 
 const dashboardLink = (props: any) => <Link to="/user/dashboard" {...props} />;
+type Styles = WithStyles<"paper"> & WithStyles<"button">;
 const dClass = decorate(
-    class PostReview extends React.Component<WithStyles<"paper"> & IPostReviewProps, {}> {
+    class PostReview extends React.Component<Styles & IPostReviewProps, {}> {
         render() {
             const { classes } = this.props;
             const generateListItem = (function() {
@@ -66,7 +70,8 @@ const dClass = decorate(
                                     fullWidth={true}
                                     component={dashboardLink}
                                     variant="raised"
-                                    color="primary">
+                                    color="primary"
+                                    className={classes.button}>
                                     Dashboard
                                 </Button>
                             </Grid>
@@ -100,7 +105,8 @@ const dClass = decorate(
                                     fullWidth={true}
                                     component={dashboardLink}
                                     variant="raised"
-                                    color="primary">
+                                    color="primary"
+                                    className={classes.button}>
                                     Dashboard
                                 </Button>
                             </Grid>
