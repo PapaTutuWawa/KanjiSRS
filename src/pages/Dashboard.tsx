@@ -14,6 +14,7 @@ import { getRecentItems, getFailedItems } from "../models/User";
 
 import { IResult } from "../models/Review";
 import VocabTableRow from "../components/VocabTableRow";
+import BottomBar from "../components/BottomBar";
 
 const decorate = withStyles(() => ({
     paper: {
@@ -98,6 +99,7 @@ const dClass = decorate(
                         </Paper>
                     </Grid>
                 </Grid>
+                <BottomBar />
             </div>;
         }
     }

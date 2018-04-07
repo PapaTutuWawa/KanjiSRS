@@ -11,6 +11,8 @@ import Popover from "material-ui/Popover";
 
 import { Redirect } from "react-router-dom";
 
+import BottomBar from "../components/BottomBar";
+
 const decorate = withStyles(() => ({
     paper: {
         padding: 15,
@@ -179,6 +181,7 @@ const dClass = decorate(
                         </Paper>
                     </Grid>
                 </Grid>
+                <BottomBar />
             </div>;
         }
     }

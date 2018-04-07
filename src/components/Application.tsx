@@ -6,7 +6,6 @@ import AuthRoute from "./AuthRoute";
 import CssBaseline from "material-ui/CssBaseline";
 
 import Topbar from "./TopBar";
-import BottomBar from "./BottomBar";
 
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
@@ -121,7 +120,6 @@ export default class Application extends React.Component<{}, IApplicationState> 
                             return <PostReview getLastReview={this.getLastReview} />;
                     }} isAuth={this.checkAuth} />
                     <AuthRoute path="/user/vocab" component={VocabList} isAuth={this.checkAuth} />
-                    <BottomBar />
                 </div>
             </BrowserRouter>
         </React.Fragment>;
