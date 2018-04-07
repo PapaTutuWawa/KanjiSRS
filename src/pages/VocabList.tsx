@@ -8,7 +8,8 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from "material-ui/Ta
 import IconButton from "material-ui/IconButton";
 import DeleteIcon from "material-ui-icons/Delete";
 
-import { getRecentItems } from "../backend/User";
+// Move this into the Application Component
+import { getRecentItems } from "../models/User";
 
 // We cannot set overflow. But the Docs say it's okay,
 // so ignore all the compiler errors
@@ -49,7 +50,7 @@ const dClass = decorate(
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Delete</TableCell>
-                                            <TableCell>Kanji</TableCell>
+                                            <TableCell>Vocabulary</TableCell>
                                             <TableCell>Reading</TableCell>
                                             <TableCell>Meaning</TableCell>
                                         </TableRow>

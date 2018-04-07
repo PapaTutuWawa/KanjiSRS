@@ -15,7 +15,8 @@ import AccountCircle from "material-ui-icons/AccountCircle";
 
 import { Link } from "react-router-dom";
 
-import { getUsername } from "../backend/User";
+// TODO: Move this into the application component
+import { getUsername } from "../models/User";
 
 interface ITopbarState {
     drawerOpen: boolean;

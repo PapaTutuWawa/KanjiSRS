@@ -10,7 +10,7 @@ import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
 import Button from "material-ui/Button";
 
-import { getRecentItems, getFailedItems } from "../backend/User";
+import { getRecentItems, getFailedItems } from "../models/User";
 
 import { IResult } from "../models/Review";
 import VocabTableRow from "../components/VocabTableRow";
@@ -23,6 +23,7 @@ const decorate = withStyles(() => ({
     },
     reviewButton: {
         'margin-bottom': 10,
+        height: 60,
     },
     root: {
         flexGrow: 1,
@@ -35,9 +36,9 @@ interface IDashboardProps {
 }
 
 const ReviewLink = (props: any) => <Link to="/user/review" {...props} />;
-type StyleAttributes = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
+type Style = WithStyles<"paper"> & WithStyles<"reviewButton"> & WithStyles<"root">;
 const dClass = decorate(
-    class Dashboard extends React.Component<StyleAttributes & IDashboardProps, {}> {
+    class Dashboard extends React.Component<Style & IDashboardProps, {}> {
         render() {
             // Destructure, so that we have a shortcut to this.props.classes
             const { classes } = this.props;

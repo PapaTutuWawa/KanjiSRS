@@ -10,7 +10,8 @@ import { KanjiView } from "../components/KanjiView";
 import { IQuestion, QuestionType, IResult, ResultType } from "../models/Review";
 import { generateQuestionQueue, shuffleQuestionQueue } from "../models/ReviewQueue";
 
-import { getReviewVocab } from "../backend/User";
+// TODO: Move this into the Application Component
+import { getReviewVocab } from "../models/User";
 
 const decorate = withStyles(({ palette, spacing }) => ({
     review: {
