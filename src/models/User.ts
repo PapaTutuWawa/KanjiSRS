@@ -1,4 +1,4 @@
-import { IKanji } from "../models/Review";
+import { IKanji, IResult, ResultType, QuestionType } from "../models/Review";
 
 /*
   Retrieves the user's recently added kanji.
@@ -49,6 +49,32 @@ export function getReviewVocab(): IKanji[] {
         char: "切れる",
         reading: "きれる",
         meaning: "to be cut"
+    }];
+}
+
+export function fetchLastReview(): IResult[] {
+    return [{
+        type: ResultType.Correct,
+        question: {
+            type: QuestionType.Reading,
+            kanji: {
+                char: "切れる",
+                reading: "きれる",
+                meaning: "to be cut",
+            },
+            id: 0,
+        }
+    },{
+        type: ResultType.Wrong,
+        question: {
+            type: QuestionType.Meaning,
+            kanji: {
+                char: "切れる",
+                reading: "きれる",
+                meaning: "to be cut",
+            },
+            id: 1,
+        }
     }];
 }
 

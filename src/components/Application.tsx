@@ -15,6 +15,7 @@ import PostReview from "../pages/PostReview";
 import VocabList from "../pages/VocabList";
 
 import { IResult } from "../models/Review";
+import { fetchLastReview } from "../models/User";
 
 interface IApplicationState {
     // TODO: For debugging only!
@@ -22,6 +23,7 @@ interface IApplicationState {
     lastReview: IResult[];
 }
 
+// TODO: Set the Content Security Policy
 export default class Application extends React.Component<{}, IApplicationState> {
     constructor(props: any) {
         super(props);
@@ -47,6 +49,10 @@ export default class Application extends React.Component<{}, IApplicationState> 
             // Just to see the timeout
             setTimeout(() => {
                 if (username === "test" && password === "test") {
+                    // TODO: SessionStorage seems fine, but look out for better ways
+                    // NOTE: Cookies would be nice as they are persistent, but (I think) they
+                    //       that they arent as secure.
+                    sessionStorage.setItem("sessionID", "abc");
                     this.setState({
                         auth: true,
                     });
@@ -59,8 +65,13 @@ export default class Application extends React.Component<{}, IApplicationState> 
         });
     }
 
+    logout() {
+        // Perform the logout
+        // TODO: Actually perform the logout
+        sessionStorage.setItem("sessionID", "");
+    }
+
     setLastReview(review: IResult[]) {
-        // TODO: Filter out unique vocab
         this.setState({
             lastReview: review,
         });
@@ -71,11 +82,14 @@ export default class Application extends React.Component<{}, IApplicationState> 
     }
 
     componentWillMount() {
-        // TODO: Fetch the last review
+        const review = fetchLastReview();
+        this.setState({
+            lastReview: review,
+        });
     }
 
     checkAuth() {
-        return this.state.auth === true;
+        return sessionStorage.getItem("sessionID") === "abc";
     }
 
     render() {
@@ -84,11 +98,12 @@ export default class Application extends React.Component<{}, IApplicationState> 
            components not matching, since we use styles (using withStyles/WithStyles). These
            are, however, not critical, so we just silence them.
          */
+        // TODO: 404 page
         return <React.Fragment>
             <CssBaseline />
             <BrowserRouter>
                 <div>
-                    <Topbar isAuth={this.checkAuth} />
+                    <Topbar isAuth={this.checkAuth} logout={this.logout} />
                     <Route exact={true} path="/" component={() => <Redirect to="/login" /> } />
                     <Route path="/login" component={() => {
                             return <Login login={this.login} isAuth={this.checkAuth} />;
