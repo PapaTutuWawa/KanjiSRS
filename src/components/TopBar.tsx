@@ -41,7 +41,6 @@ interface ITopbarProps {
 }
 
 const DashboardLink = (props: any) => <Link to="/user/dashboard" {...props} />;
-const LoginLink = (props: any) => <Link to="/login" {...props} />;
 const VocabListLink = (props: any) => <Link to="/user/vocab" {...props} />;
 type Style = WithStyles<"logoutButton"> & WithStyles<"flex"> & WithStyles<"root">;
 const dClass = decorate(
@@ -99,7 +98,6 @@ const dClass = decorate(
                             // Only show the logout button when we're logged in
                             auth ? <Button
                                        className={classes.logoutButton}
-                                       component={LoginLink}
                                        onClick={(evt) => this.props.logout()}>
                                 Logout
                             </Button> : null
