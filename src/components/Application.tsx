@@ -14,7 +14,7 @@ import PostReview from "../pages/PostReview";
 import VocabList from "../pages/VocabList";
 
 import { IResult, IVocab } from "../models/Review";
-import { fetchLastReview } from "../models/User";
+import { fetchLastReview, postVocabulary } from "../models/User";
 
 interface IApplicationState {
     lastReview: IResult[];
@@ -72,7 +72,7 @@ export default class Application extends React.Component<{}, IApplicationState> 
     }
 
     addVocabulary(vocab: IVocab): boolean {
-        return false;
+        return postVocabulary(vocab);
     }
 
     setLastReview(review: IResult[]) {

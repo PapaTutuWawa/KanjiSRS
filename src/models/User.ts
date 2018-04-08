@@ -78,6 +78,41 @@ export function fetchLastReview(): IResult[] {
     }];
 }
 
+let serverVocab: IVocab[] = [
+    {
+        japanese: "前",
+        reading: "まえ",
+        meaning: "Before"
+    }, {
+        japanese: "出",
+        reading: "しゅつ",
+        meaning: "Exit"
+    }, {
+        japanese: "大切",
+        reading: "たいせつ",
+        meaning: "important"
+    }, {
+        japanese: "大",
+        reading: "たい",
+        meaning: "big"
+    }
+];
+
+/*
+  TODO: Actually implement this
+ */
+export function postVocabulary(vocab: IVocab): boolean {
+    serverVocab = serverVocab.concat(vocab);
+    return true;
+}
+
+/*
+  TODO: Actually implement this
+ */
+export function fetchVocabulary(): IVocab[] {
+    return serverVocab;
+}
+
 /*
   TODO: Actually retrieve the username from somewhere
  */

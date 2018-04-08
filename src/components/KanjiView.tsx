@@ -142,8 +142,7 @@ const dClass = decorate(
                                     backgroundColor: this.state.correct ? "#26A65B" : "#f03434",
                                     color: "white",
                                 }
-                            }}
-                        >
+                            }}>
                             <Typography
                                 className={classes.popupText}
                                 variant="title"
