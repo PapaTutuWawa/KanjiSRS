@@ -68,6 +68,10 @@ const dClass = decorate(
             });
         }
 
+        /*
+           See if the answer was correct. Return true, if that's the
+           case. False, otherwise.
+         */
         validateAnswer(answer: string): boolean {
             const question = this.questions[this.state.questionIndex];
 
@@ -95,6 +99,16 @@ const dClass = decorate(
             // Shorthand functions for marking the questions
             const markSucc = () => this.markVocab(ResultType.Correct);
             const markWrong = () => this.markVocab(ResultType.Wrong);
+            const markForgotten = () => this.markVocab(ResultType.Forgotten);
+
+            // TODO: Maybe find a better way
+            // If the answer is not known (e.g. forgotte), then just mark it as wrong,
+            // but proceed.
+            if (answer === "") {
+                continueReview();
+                markForgotten();
+                return false;
+            }
 
             switch(question.type) {
                 case QuestionType.Reading:

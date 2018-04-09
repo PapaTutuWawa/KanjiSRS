@@ -27,6 +27,23 @@ interface IPostReviewProps {
     getLastReview: () => IResult[];
 }
 
+const tableHead = () => {
+    return <TableHead>
+        <TableRow>
+            <TableCell>
+                <Typography style={{ color: "white" }}>
+                    Vocabulary
+                </Typography>
+            </TableCell>
+            <TableCell>
+                <Typography style={{ color: "white" }}>
+                    Task
+                </Typography>
+            </TableCell>
+        </TableRow>
+    </TableHead>
+};
+
 const dashboardLink = (props: any) => <Link to="/user/dashboard" {...props} />;
 type Styles = WithStyles<"paper"> & WithStyles<"button">;
 const dClass = decorate(
@@ -54,12 +71,7 @@ const dClass = decorate(
                                     Correct Answers
                                 </Typography>
                                 <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Vocabulary</TableCell>
-                                            <TableCell>Task</TableCell>
-                                        </TableRow>
-                                    </TableHead>
+                                    { tableHead() }
                                     <TableBody>
                                         { this.props.getLastReview()
                                               .filter((el) => el.type === ResultType.Correct)
@@ -89,15 +101,40 @@ const dClass = decorate(
                                     Wrong Answers
                                 </Typography>
                                 <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Vocabulary</TableCell>
-                                            <TableCell>Task</TableCell>
-                                        </TableRow>
-                                    </TableHead>
+                                    { tableHead() }
                                     <TableBody>
                                         { this.props.getLastReview()
                                               .filter((el) => el.type === ResultType.Wrong)
+                                              .map((el) => generateListItem(el)) }
+                                    </TableBody>
+                                </Table>
+                                <Button
+                                    fullWidth={true}
+                                    component={dashboardLink}
+                                    variant="raised"
+                                    color="primary"
+                                    className={classes.button}>
+                                    Dashboard
+                                </Button>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs lg={4}>
+                        <Paper
+                            elevation={4}
+                            className={classes.paper}
+                            style={{ backgroundColor: "#000000", color: "white" }}>
+                            <Grid container direction="column">
+                                <Typography
+                                    variant="title"
+                                    color="inherit">
+                                    Forgotten Vocabulary
+                                </Typography>
+                                <Table>
+                                    { tableHead() }
+                                    <TableBody>
+                                        { this.props.getLastReview()
+                                              .filter((el) => el.type === ResultType.Forgotten)
                                               .map((el) => generateListItem(el)) }
                                     </TableBody>
                                 </Table>

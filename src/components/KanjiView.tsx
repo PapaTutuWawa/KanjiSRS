@@ -4,6 +4,7 @@ import Card, { CardContent, CardActions } from "material-ui/Card";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import { WithStyles, withStyles } from "material-ui/styles";
+import Button from "material-ui/Button";
 import Popover from "material-ui/Popover";
 
 import KanjiInput from "./KanjiInput";
@@ -29,11 +30,14 @@ const decorate = withStyles(() => ({
     },
     popupText: {
         margin: 20,
+    },
+    forgotButton: {
+        marginLeft: 20,
     }
 }));
 
 // TODO: We cause a setState after dismount somewhere!
-type Style = WithStyles<"card"> & WithStyles<"popupText">;
+type Style = WithStyles<"card"> & WithStyles<"popupText"> & WithStyles<"forgotButton">;
 const dClass = decorate(
     class KanjiView extends React.Component<Style & IKanjiViewProps, IKanjiViewState> {
         // Needed for the Popover to be positioned next to the Kanji
@@ -69,13 +73,34 @@ const dClass = decorate(
             });
 
             this.popupTimeout = setTimeout(this.resetPopup, 1000);
+            this.handleForgotten = this.handleForgotten.bind(this);
         }
 
         componentWillDismount() {
             clearTimeout(this.popupTimeout);
         }
 
+        /*
+           Here we just pass an empty string to the evaluation function, so that
+           we can mark the answer as a "I don't know"-answer.
+         */
+        handleForgotten(evt: any) {
+            this.props.validate("");
+        }
+
         checkAnswer(input: string) {
+            // Check if the user even wrote something
+            if ((this.refs.input as KanjiInput).getInput() === "") {
+                this.setState({
+                    // TODO: This seems rather hacky
+                    // To make the popup appear red, just say that the answer is wrong
+                    // (which it technically is)
+                    correct: false,
+                });
+                this.showPopup("Answer cannot be empty");
+                return;
+            }
+
             // Clear the input in any case
             (this.refs.input as KanjiInput).clear();
 
@@ -156,6 +181,13 @@ const dClass = decorate(
                                 type={question.type}
                                 validate={this.checkAnswer}
                             />
+                            <Button
+                                variant="raised"
+                                color="secondary"
+                                onClick={this.handleForgotten}
+                                className={classes.forgotButton}>
+                                Forgotten
+                            </Button>
                         </Grid>
                     </CardActions>
                 </Card>

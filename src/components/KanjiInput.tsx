@@ -5,7 +5,7 @@ import Textfield from "material-ui/TextField";
 //@ts-ignore
 import { toKana } from "wanakana";
 
-import { QuestionType } from "../models/Review";
+import { QuestionType, QuestionTypeString } from "../models/Review";
 
 interface IKanjiInputProps {
     validate: (input: string) => void;
@@ -35,6 +35,9 @@ class KanjiInput extends React.Component<IKanjiInputProps, IKanjiInputState> {
         });
     }
 
+    getInput(): string {
+        return this.state.input;
+    }
 
     handleChange(evt: any) {
         let input = evt.target.value;
@@ -64,22 +67,14 @@ class KanjiInput extends React.Component<IKanjiInputProps, IKanjiInputState> {
         }
     }
 
-    private QTypeToName(type: QuestionType): string {
-        switch (type) {
-            case QuestionType.Reading: return "Reading";
-            case QuestionType.Meaning: return "Meaning";
-        }
-    }
-
     render() {
         return <div>
             <Textfield
                 value={this.state.input}
                 onChange={this.handleChange}
                 onKeyPress={this.handleKeyPress}
-                label={this.QTypeToName(this.props.type)}
-                fullWidth={true}
-            ></Textfield>
+                label={QuestionTypeString(this.props.type)}
+                fullWidth={true} />
         </div>
     }
 }
