@@ -1,7 +1,19 @@
+// Data needed by the "Improved SM2" Algorithm
+export interface ISRSData {
+    // (>= 1.3): How easy the item was, with 1.3 being the most difficult
+    easiness: number;
+    // Number of correct consecutive answers
+    correctAnswers: number;
+    // When the next review should occur
+    nextDueDate: Date;
+};
+
 export interface IVocab {
     japanese: string;
     reading: string;
     meaning: string;
+
+    srsData: ISRSData;
 };
 
 export enum QuestionType {
@@ -28,6 +40,7 @@ export interface IQuestion {
 export enum ResultType {
     Correct,
     Wrong,
+    Forgotten,
 };
 
 // Converts a ResultType into its HTML Color (e.g. Wrong -> Red)
@@ -37,7 +50,12 @@ export function ResultTypeColor(rtype: ResultType): string {
             return "#26A65B";
         case ResultType.Wrong:
             return "#f03434";
+        case ResultType.Forgotten:
+            return "#000000";
     }
+
+    // TypeScript complains otherwise
+    return "";
 };
 
 export interface IResult {

@@ -22,6 +22,9 @@ import AddIcon from "material-ui-icons/Add";
 import CloseIcon from "material-ui-icons/Close";
 import PencilIcon from "../components/icons/PencilIcon";
 
+
+import { DEFAULT_EASINESS } from "../models/srs/sm2";
+
 // TODO: Move this into the Application Component
 import { fetchVocabulary } from "../models/User";
 import { IVocab } from "../models/Review";
@@ -156,6 +159,12 @@ const dClass = decorate(
                 japanese: this.japaneseRef.value,
                 reading: this.readingRef.value,
                 meaning: this.meaningRef.value,
+                srsData: {
+                    easiness: DEFAULT_EASINESS,
+                    correctAnswers: 0,
+                    // Just say it's due today
+                    nextDueDate: new Date(),
+                },
             };
             const ret = this.props.addVocabulary(vocab);
 
