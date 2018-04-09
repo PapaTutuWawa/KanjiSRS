@@ -1,4 +1,4 @@
-import { ISRSData, ResultType } from "../Review";
+import { IVocab, ISRSData, ResultType } from "../Review";
 
 const CORRECT = 3;
 const WRONG = 2;
@@ -25,9 +25,9 @@ function daysToMilli(num: number): number {
 /*
   Returns the next due-date of an item, according to the SM2 Algorithm
  */
-export function nextDueDate(metadata: ISRSData, correct: boolean): Date {
+export function nextDueDate(metadata: ISRSData, rtype: ResultType): Date {
     let days: number;
-    if (correct) {
+    if (rtype === ResultType.Correct) {
         days = daysToMilli(6 * Math.pow(metadata.easiness, metadata.correctAnswers - 1));
     } else {
         days = daysToMilli(1);
@@ -51,9 +51,20 @@ export function performanceRating(resultType: ResultType): number {
 };
 
 /*
-  Calculates the change in easiness using the items meatadata and its
-  performance rating
+  Calculates the change in easiness using the items performance rating
  */
-export function easinessDelta(metadata: ISRSData, perfRating: number): number {
+export function easinessDelta(perfRating: number): number {
     return -0.8 + 0.28 * perfRating + 0.02 * Math.pow(perfRating, 2);
+}
+
+export function updateVocab(vocab: IVocab, rtype: ResultType): IVocab {
+    return Object.assign(vocab, {
+        srsData: {
+            easiness: vocab.srsData.easiness + easinessDelta(performanceRating(rtype)),
+            nextDueDate: nextDueDate(vocab.srsData, rtype),
+            // Increment the number of correct answers, if the answer was correct. Otherwise, we just
+            // set it to 0.
+            correctAnswers: (rtype === ResultType.Correct) ? vocab.srsData.correctAnswers + 1 : 0,
+        }
+    });
 }
