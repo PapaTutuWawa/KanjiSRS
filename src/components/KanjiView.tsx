@@ -10,17 +10,18 @@ import Popover from "material-ui/Popover";
 import KanjiInput from "./KanjiInput";
 
 import { IQuestion, QuestionType } from "../models/ReviewQueue";
+import { ResultType, ResultTypeColor } from "../models/Review";
 
 interface IKanjiViewState {
     popupMessage: string;
     popupOpen: boolean;
 
-    correct: boolean;
+    result: ResultType;
 }
 
 interface IKanjiViewProps {
     question: IQuestion;
-    validate: (answer: string) => boolean;
+    validate: (answer: string) => ResultType;
 }
 
 const decorate = withStyles(() => ({
@@ -50,12 +51,13 @@ const dClass = decorate(
             this.state = {
                 popupMessage: "Correct",
                 popupOpen: false,
-                correct: true // Let's stay positive
+                result: ResultType.Correct // Let's stay positive
             };
 
             this.checkAnswer = this.checkAnswer.bind(this);
             this.resetPopup = this.resetPopup.bind(this);
             this.showPopup = this.showPopup.bind(this);
+            this.handleForgotten = this.handleForgotten.bind(this);
         }
 
         resetPopup() {
@@ -73,7 +75,6 @@ const dClass = decorate(
             });
 
             this.popupTimeout = setTimeout(this.resetPopup, 1000);
-            this.handleForgotten = this.handleForgotten.bind(this);
         }
 
         componentWillDismount() {
@@ -86,6 +87,13 @@ const dClass = decorate(
          */
         handleForgotten(evt: any) {
             this.props.validate("");
+
+            // Set the state to forgotten, so we get the right colour
+            this.setState({
+                result: ResultType.Forgotten,
+            });
+
+            this.showPopup("Forgotten");
         }
 
         checkAnswer(input: string) {
@@ -95,7 +103,7 @@ const dClass = decorate(
                     // TODO: This seems rather hacky
                     // To make the popup appear red, just say that the answer is wrong
                     // (which it technically is)
-                    correct: false,
+                    result: ResultType.Wrong,
                 });
                 this.showPopup("Answer cannot be empty");
                 return;
@@ -112,24 +120,31 @@ const dClass = decorate(
             const correct = () => {
                 // Set the state to correct, so we get the right colour
                 this.setState({
-                    correct: true,
+                    result: ResultType.Correct,
                 });
 
                 this.showPopup("Correct")
             };
             const wrong = () => {
-                // Set the state to correct, so we get the right colour
+                // Set the state to wrong, so we get the right colour
                 this.setState({
-                    correct: false,
+                    result: ResultType.Wrong,
                 });
 
                 this.showPopup("Wrong")
             };
 
-            if (this.props.validate(input)) {
-                correct();
-            } else {
-                wrong();
+            switch (this.props.validate(input)) {
+                case ResultType.Correct:
+                    correct();
+                    break;
+                case ResultType.Wrong:
+                    wrong();
+                    break;
+                case ResultType.Forgotten:
+                    // In theory, this should never occur
+                    // TODO:
+                    break;
             }
         }
 
@@ -164,7 +179,7 @@ const dClass = decorate(
                                 style: {
                                     // If the answer given was correct, then the paper should appear green. But
                                     // if the answer was wrong, then the paper should be red.
-                                    backgroundColor: this.state.correct ? "#26A65B" : "#f03434",
+                                    backgroundColor: ResultTypeColor(this.state.result),
                                     color: "white",
                                 }
                             }}>

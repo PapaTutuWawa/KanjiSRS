@@ -76,6 +76,9 @@ export default class Application extends React.Component<{}, IApplicationState> 
     }
 
     setLastReview(review: IResult[]) {
+        // TODO: Update the vocab's metadata
+        // NOTE: That would probably require that we give each vocabulary item
+        //       its own unique ID, so that we can even find it in the database
         this.setState({
             lastReview: review,
         });

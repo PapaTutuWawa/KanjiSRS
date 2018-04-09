@@ -55,9 +55,11 @@ const dClass = decorate(
 
             // If we have already marked the question, it was answered wrong. If, this time, the
             // answer is correct, we do not want to override the wrong mark.
+            // TODO: If we answer wrong multiple times, then it also appears multiple times
+            // TODO: Handle forgotten items
             if (this.state.review.find((el: IResult) => {
                 return el.question.id === id;
-            }) && type === ResultType.Correct) return;
+            }) && (type === ResultType.Correct)) return;
 
             // Mark the answer
             this.setState({
@@ -72,7 +74,7 @@ const dClass = decorate(
            See if the answer was correct. Return true, if that's the
            case. False, otherwise.
          */
-        validateAnswer(answer: string): boolean {
+        validateAnswer(answer: string): ResultType {
             const question = this.questions[this.state.questionIndex];
 
             // Advance the review by showing the next question
@@ -107,7 +109,7 @@ const dClass = decorate(
             if (answer === "") {
                 continueReview();
                 markForgotten();
-                return false;
+                return ResultType.Forgotten;
             }
 
             switch(question.type) {
@@ -115,20 +117,20 @@ const dClass = decorate(
                     if (answer === question.vocab.reading) {
                         continueReview();
                         markSucc();
-                        return true;
+                        return ResultType.Correct;
                     } else {
                         markWrong();
-                        return false;
+                        return ResultType.Wrong;
                     }
                 case QuestionType.Meaning:
                     // TODO: Maybe check if we're still close
                     if (answer.toLowerCase() === question.vocab.meaning.toLowerCase()) {
                         continueReview();
                         markSucc();
-                        return true;
+                        return ResultType.Correct;
                     } else {
                         markWrong();
-                        return false;
+                        return ResultType.Wrong;
                     }
             }
         }
